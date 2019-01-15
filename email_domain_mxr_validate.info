@@ -10,3 +10,5 @@ dependencies[] = variable
 
 files[] = email_domain_mxr_validate.variable.inc
 files[] = includes/views/email_domain_mxr_validate.views.inc
+
+configure = admin/config/development/email-domain-mxr-validate
