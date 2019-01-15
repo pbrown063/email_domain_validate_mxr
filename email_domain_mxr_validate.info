@@ -1,4 +1,4 @@
-name = Email Domain MXR Validate
+name = Email Domain Validate MXR
 description = Allows email elements to be validated against mail exchange records.
 core = 7.x
 
@@ -8,7 +8,7 @@ dependencies[] = views
 dependencies[] = system
 dependencies[] = variable
 
-files[] = email_domain_mxr_validate.variable.inc
-files[] = includes/views/email_domain_mxr_validate.views.inc
+files[] = email_domain_validate_mxr.variable.inc
+files[] = includes/views/email_domain_validate_mxr.views.inc
 
-configure = admin/config/development/email-domain-mxr-validate
+configure = admin/config/development/email-domain-validate-mxr

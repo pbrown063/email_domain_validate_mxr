@@ -2,86 +2,86 @@
 
 /**
  * @file
- * Views file for email domain mxr validate failures.
+ * Views file for email domain validate mxr failures.
  */
 
 /**
- * Default email domain mxr validate views.
+ * Default email domain validate mxr views.
  *
  * @return array
  *   Returns the $view.
  */
-function email_domain_mxr_validate_views_default_views() {
-  if (!variable_get('email_domain_mxr_validate_fail_entity_creation', FALSE)) {
+function email_domain_validate_mxr_views_default_views() {
+  if (!variable_get('email_domain_validate_mxr_fail_entity_creation', FALSE)) {
     return array();
   }
   $views = array();
 
-  $email_domain_mxr_validate_view = email_domain_mxr_validate_failures_view();
-  $views[$email_domain_mxr_validate_view->name] = $email_domain_mxr_validate_view;
+  $email_domain_validate_mxr_view = email_domain_validate_mxr_failures_view();
+  $views[$email_domain_validate_mxr_view->name] = $email_domain_validate_mxr_view;
 
   return $views;
 }
 
 /**
- * View for email domain mxr validation errors.
+ * View for email domain validate mxr errors.
  *
  * @return \view
  *   Returns the $view object for drupal to import.
  */
-function email_domain_mxr_validate_failures_view() {
+function email_domain_validate_mxr_failures_view() {
   $view = new view();
-  $view->name = 'email_domain_mxr_validate_failures';
+  $view->name = 'email_domain_validate_mxr_failures';
   $view->description = '';
   $view->tag = 'default';
-  $view->base_table = 'email_domain_mxr_validate_fail';
-  $view->human_name = 'Email Domain MXR Validate Failures';
+  $view->base_table = 'email_domain_validate_mxr_fail';
+  $view->human_name = 'Email Domain Validate MXR Failures';
   $view->core = 7;
   $view->api_version = '3.0';
   $view->disabled = FALSE; /* Edit this to true to make a default view disabled initially */
 
   /* Display: Master */
   $handler = $view->new_display('default', 'Master', 'default');
-  $handler->display->display_options['title'] = 'Email Domain MXR Validate Failures';
+  $handler->display->display_options['title'] = 'Email Domain Validate MXR Failures';
   $handler->display->display_options['use_ajax'] = TRUE;
   $handler->display->display_options['use_more_always'] = FALSE;
   $handler->display->display_options['access']['type'] = 'perm';
-  $handler->display->display_options['access']['perm'] = 'access email domain mxr validation failure report';
+  $handler->display->display_options['access']['perm'] = 'access email domain validate mxr failure report';
   $handler->display->display_options['cache']['type'] = 'none';
   $handler->display->display_options['query']['type'] = 'views_query';
   $handler->display->display_options['exposed_form']['type'] = 'basic';
   $handler->display->display_options['pager']['type'] = 'full';
   $handler->display->display_options['pager']['options']['items_per_page'] = '25';
   $handler->display->display_options['style_plugin'] = 'table';
-  /* Relationship: Email Domain MXR Validate Fail: Uid */
+  /* Relationship: Email Domain Validate MXR Fail: Uid */
   $handler->display->display_options['relationships']['uid']['id'] = 'uid';
-  $handler->display->display_options['relationships']['uid']['table'] = 'email_domain_mxr_validate_fail';
+  $handler->display->display_options['relationships']['uid']['table'] = 'email_domain_validate_mxr_fail';
   $handler->display->display_options['relationships']['uid']['field'] = 'uid';
-  /* Field: Email Domain MXR Validate Fail: Email domain mxr validate fail ID */
+  /* Field: Email Domain Validate MXR Fail: Email domain validate mxr fail ID */
   $handler->display->display_options['fields']['id']['id'] = 'id';
-  $handler->display->display_options['fields']['id']['table'] = 'email_domain_mxr_validate_fail';
+  $handler->display->display_options['fields']['id']['table'] = 'email_domain_validate_mxr_fail';
   $handler->display->display_options['fields']['id']['field'] = 'id';
   $handler->display->display_options['fields']['id']['exclude'] = TRUE;
-  /* Field: Email Domain MXR Validate Fail: Email_address */
+  /* Field: Email Domain Validate MXR Fail: Email_address */
   $handler->display->display_options['fields']['email_address']['id'] = 'email_address';
-  $handler->display->display_options['fields']['email_address']['table'] = 'email_domain_mxr_validate_fail';
+  $handler->display->display_options['fields']['email_address']['table'] = 'email_domain_validate_mxr_fail';
   $handler->display->display_options['fields']['email_address']['field'] = 'email_address';
   $handler->display->display_options['fields']['email_address']['label'] = 'Offending Email Address';
-  /* Field: Email Domain MXR Validate Fail: Form_id */
+  /* Field: Email Domain Validate MXR Fail: Form_id */
   $handler->display->display_options['fields']['form_id']['id'] = 'form_id';
-  $handler->display->display_options['fields']['form_id']['table'] = 'email_domain_mxr_validate_fail';
+  $handler->display->display_options['fields']['form_id']['table'] = 'email_domain_validate_mxr_fail';
   $handler->display->display_options['fields']['form_id']['field'] = 'form_id';
   $handler->display->display_options['fields']['form_id']['label'] = 'Offending Form ID';
-  /* Field: Email Domain MXR Validate Fail: Timestamp */
+  /* Field: Email Domain Validate MXR Fail: Timestamp */
   $handler->display->display_options['fields']['timestamp']['id'] = 'timestamp';
-  $handler->display->display_options['fields']['timestamp']['table'] = 'email_domain_mxr_validate_fail';
+  $handler->display->display_options['fields']['timestamp']['table'] = 'email_domain_validate_mxr_fail';
   $handler->display->display_options['fields']['timestamp']['field'] = 'timestamp';
   $handler->display->display_options['fields']['timestamp']['date_format'] = 'custom';
   $handler->display->display_options['fields']['timestamp']['custom_date_format'] = 'M d Y - H:i';
   $handler->display->display_options['fields']['timestamp']['second_date_format'] = 'long';
-  /* Field: Email Domain MXR Validate Fail: Uid */
+  /* Field: Email Domain Validate MXR Fail: Uid */
   $handler->display->display_options['fields']['uid']['id'] = 'uid';
-  $handler->display->display_options['fields']['uid']['table'] = 'email_domain_mxr_validate_fail';
+  $handler->display->display_options['fields']['uid']['table'] = 'email_domain_validate_mxr_fail';
   $handler->display->display_options['fields']['uid']['field'] = 'uid';
   $handler->display->display_options['fields']['uid']['exclude'] = TRUE;
   /* Field: User: Name */
@@ -90,9 +90,9 @@ function email_domain_mxr_validate_failures_view() {
   $handler->display->display_options['fields']['name']['field'] = 'name';
   $handler->display->display_options['fields']['name']['relationship'] = 'uid';
   $handler->display->display_options['fields']['name']['label'] = 'Submitting User';
-  /* Sort criterion: Email Domain MXR Validate Fail: Timestamp */
+  /* Sort criterion: Email Domain Validate MXR Fail: Timestamp */
   $handler->display->display_options['sorts']['timestamp']['id'] = 'timestamp';
-  $handler->display->display_options['sorts']['timestamp']['table'] = 'email_domain_mxr_validate_fail';
+  $handler->display->display_options['sorts']['timestamp']['table'] = 'email_domain_validate_mxr_fail';
   $handler->display->display_options['sorts']['timestamp']['field'] = 'timestamp';
   $handler->display->display_options['sorts']['timestamp']['order'] = 'DESC';
   /* Filter criterion: User: Name (raw) */
@@ -141,9 +141,9 @@ function email_domain_mxr_validate_failures_view() {
     31 => 0,
     32 => 0,
   );
-  /* Filter criterion: Email Domain MXR Validate Fail: Email_address */
+  /* Filter criterion: Email Domain Validate MXR Fail: Email_address */
   $handler->display->display_options['filters']['email_address']['id'] = 'email_address';
-  $handler->display->display_options['filters']['email_address']['table'] = 'email_domain_mxr_validate_fail';
+  $handler->display->display_options['filters']['email_address']['table'] = 'email_domain_validate_mxr_fail';
   $handler->display->display_options['filters']['email_address']['field'] = 'email_address';
   $handler->display->display_options['filters']['email_address']['operator'] = 'contains';
   $handler->display->display_options['filters']['email_address']['group'] = 1;
@@ -186,9 +186,9 @@ function email_domain_mxr_validate_failures_view() {
     31 => 0,
     32 => 0,
   );
-  /* Filter criterion: Date: Date (email_domain_mxr_validate_fail) */
+  /* Filter criterion: Date: Date (email_domain_validate_mxr_fail) */
   $handler->display->display_options['filters']['date_filter']['id'] = 'date_filter';
-  $handler->display->display_options['filters']['date_filter']['table'] = 'email_domain_mxr_validate_fail';
+  $handler->display->display_options['filters']['date_filter']['table'] = 'email_domain_validate_mxr_fail';
   $handler->display->display_options['filters']['date_filter']['field'] = 'date_filter';
   $handler->display->display_options['filters']['date_filter']['operator'] = '>=';
   $handler->display->display_options['filters']['date_filter']['group'] = 1;
@@ -232,12 +232,12 @@ function email_domain_mxr_validate_failures_view() {
   );
   $handler->display->display_options['filters']['date_filter']['form_type'] = 'date_popup';
   $handler->display->display_options['filters']['date_filter']['date_fields'] = array(
-    'email_domain_mxr_validate_fail.timestamp' => 'email_domain_mxr_validate_fail.timestamp',
+    'email_domain_validate_mxr_fail.timestamp' => 'email_domain_validate_mxr_fail.timestamp',
   );
   $handler->display->display_options['filters']['date_filter']['date_method'] = 'AND';
-  /* Filter criterion: Date: Date (email_domain_mxr_validate_fail) */
+  /* Filter criterion: Date: Date (email_domain_validate_mxr_fail) */
   $handler->display->display_options['filters']['date_filter_1']['id'] = 'date_filter_1';
-  $handler->display->display_options['filters']['date_filter_1']['table'] = 'email_domain_mxr_validate_fail';
+  $handler->display->display_options['filters']['date_filter_1']['table'] = 'email_domain_validate_mxr_fail';
   $handler->display->display_options['filters']['date_filter_1']['field'] = 'date_filter';
   $handler->display->display_options['filters']['date_filter_1']['operator'] = '<=';
   $handler->display->display_options['filters']['date_filter_1']['group'] = 1;
@@ -281,16 +281,16 @@ function email_domain_mxr_validate_failures_view() {
   );
   $handler->display->display_options['filters']['date_filter_1']['form_type'] = 'date_popup';
   $handler->display->display_options['filters']['date_filter_1']['date_fields'] = array(
-    'email_domain_mxr_validate_fail.timestamp' => 'email_domain_mxr_validate_fail.timestamp',
+    'email_domain_validate_mxr_fail.timestamp' => 'email_domain_validate_mxr_fail.timestamp',
   );
   $handler->display->display_options['filters']['date_filter_1']['date_method'] = 'AND';
 
   /* Display: Page */
   $handler = $view->new_display('page', 'Page', 'page');
   // Do not overwrite this configurable path.
-  $handler->display->display_options['path'] = variable_get('email_domain_mxr_validate_report_path', '');
+  $handler->display->display_options['path'] = variable_get('email_domain_validate_mxr_report_path', '');
   $handler->display->display_options['menu']['type'] = 'normal';
-  $handler->display->display_options['menu']['title'] = 'Email Domain MXR Validate Failures';
+  $handler->display->display_options['menu']['title'] = 'Email Domain Validate MXR Failures';
   $handler->display->display_options['menu']['name'] = 'management';
 
   /* Display: Data export */
@@ -299,18 +299,18 @@ function email_domain_mxr_validate_failures_view() {
   $handler->display->display_options['pager']['options']['offset'] = '0';
   $handler->display->display_options['style_plugin'] = 'views_data_export_csv';
   // Do not overwrite this configurable path.
-  $handler->display->display_options['path'] = variable_get('email_domain_mxr_validate_report_path', '') . '/export.csv';
+  $handler->display->display_options['path'] = variable_get('email_domain_validate_mxr_report_path', '') . '/export.csv';
   $handler->display->display_options['displays'] = array(
     'page' => 'page',
     'default' => 0,
   );
   $handler->display->display_options['use_batch'] = 'batch';
   // Do not overwrite this configurable path.
-  $handler->display->display_options['return_path'] = variable_get('email_domain_mxr_validate_report_path', '');
+  $handler->display->display_options['return_path'] = variable_get('email_domain_validate_mxr_report_path', '');
   $handler->display->display_options['segment_size'] = '50';
-  $translatables['email_domain_mxr_validate_failures'] = array(
+  $translatables['email_domain_validate_mxr_failures'] = array(
     t('Master'),
-    t('Email Domain MXR Validate Failures'),
+    t('Email Domain Validate MXR Failures'),
     t('more'),
     t('Apply'),
     t('Reset'),
@@ -325,7 +325,7 @@ function email_domain_mxr_validate_failures_view() {
     t('next ›'),
     t('last »'),
     t('User'),
-    t('Email domain mxr validate fail ID'),
+    t('Email domain validate mxr fail ID'),
     t('.'),
     t(','),
     t('Offending Email Address'),
