@@ -6,16 +6,16 @@ INTRODUCTION:
 ------------
 The purpose of this module is to 'pre-check' that an email
 domain is valid based on a mail exchange records.
-It does this by adding an element validation
+It does this by adding an element validate
 check utilizing the `getmxrr()` functionality in PHP.
 
-Optionally, entities are created for failed validation calls
+Optionally, entities are created for failed validate calls
 and a corresponding report (view) is available.
 
 Once the module is enabled validation
 can be utilized through the Drupal interface in two ways:
  1. Managing fields of the 'email' type for content types (An
-    MXR validate section with a checkbox will be available)
+    validate MXR section with a checkbox will be available)
  2. Adding or editing an email type component to a webform
     (A Mail Exchange Record Check checkbox will be visible
     in the validation section)
@@ -51,7 +51,7 @@ USE CASE:
  * The user likely intended to enter
    'averagehuman@hotmail.com'
  * Notice 'homtail.com' vs. 'hotmail.com'
- * The email would pass out of the box validation
+ * The email would pass out of the box validate
    for email patterns
  * The email address will fail the mail exchange record
    check contained in this module
@@ -70,22 +70,22 @@ CONFIGURATION
 
 * Configure user permissions in Administration » People » Permissions:
 
-   - Access Email Domain MXR Validation Failure Report
+   - Access Email Domain Validate Failure Report
 
      Users in roles with this permission will be able to view the
-     Email Domain MXR Validate Failures view.
+     Email Domain Validate MXR Failures view.
       
-   - Administer The Email Domain MXR Validation
+   - Administer The Email Domain Validate MXR
 
      Users in roles with this permission will be able to add
      this modules validation to entity fields and webform components
      that are of email type.
       
-   - Administer The Email Domain MXR Configuration Page
+   - Administer The Email Domain Validate Configuration Page
 
      Users in roles with this permission will be able to access
      and modify the configuration page at:
-     admin » config » development » email domain mxr validate
+     admin » config » development » email domain validate mxr
       
 
 * Optionally, if you have the i18n_variable module enabled
@@ -94,15 +94,15 @@ CONFIGURATION
 
       admin » config » regional » i18n » variable
 
-   by selecting the Email Domain MXR Validation group and
+   by selecting the Email Domain Validate MXR group and
    clicking the checkbox to enable multi-language for the
-   Email Domain MXR Validate Error Message variable.
+   Email Domain Validate MXR Error Message variable.
 
 Features:
 ---------
 
   * Validation of email domain against mail exchange
-     records (dns check)
+     records (mxr check)
   * Webform components of email type will have a
      checkbox for this validation
   * Entity fields of type email will have access to

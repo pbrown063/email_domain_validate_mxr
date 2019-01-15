@@ -5,19 +5,19 @@
  * Module file for basic functionality.
  */
 
-define('EMAIL_DOMAIN_MXR_VALIDATE_DEFAULT_REPORTING_VIEW_PATH', 'admin/reports/email-domain-mxr-validate-failures');
-define('EMAIL_DOMAIN_MXR_VALIDATE_DEFAULT_ERROR_MESSAGE', 'The email you have provided is not recognized as valid. Please enter a valid email address.');
-define('EMAIL_DOMAIN_MXR_VALIDATE_EMAIL_DATA_TYPE', 'email');
-define('EMAIL_DOMAIN_MXR_VALIDATE_FAIL_CODE', 11);
+define('EMAIL_DOMAIN_VALIDATE_MXR_DEFAULT_REPORTING_VIEW_PATH', 'admin/reports/email-domain-validate-mxr-failures');
+define('EMAIL_DOMAIN_VALIDATE_MXR_DEFAULT_ERROR_MESSAGE', 'The email you have provided is not recognized as valid. Please enter a valid email address.');
+define('EMAIL_DOMAIN_VALIDATE_MXR_EMAIL_DATA_TYPE', 'email');
+define('EMAIL_DOMAIN_VALIDATE_MXR_FAIL_CODE', 11);
 
 /**
  * Implements hook_help().
  *
  * Displays help and module information.
  */
-function email_domain_mxr_validate_help($path, $arg) {
+function email_domain_validate_mxr_help($path, $arg) {
   switch ($path) {
-    case "admin/help#email_domain_mxr_validate":
+    case "admin/help#email_domain_validate_mxr":
       $output = '';
       $output .= '<h3>';
       $output .= t('Summary');
@@ -36,7 +36,7 @@ function email_domain_mxr_validate_help($path, $arg) {
       $output .= t('They enter !bad_example when they intended to enter !good_example.!space',
         array(
           '!space' => ' ',
-          '!bad_example' => '<strong>human_friend_2@hotmali.com</strong>',
+          '!bad_example' => '<strong>human_friend_2@homtail.com</strong>',
           '!good_example' => '<strong>human_friend_2@hotmail.com</strong>',
         ));
       $output .= t('Normally this passes validation and the user will never receive their much anticipated news letter.!space',
@@ -108,8 +108,8 @@ function email_domain_mxr_validate_help($path, $arg) {
       $output .= t('Enable field validation in fields module and component validation in webforms');
       $output .= '</li>';
 
-      $view_of_table_link = variable_get('email_domain_mxr_validate_fail_entity_creation', 0) ?
-        '<a href="/' . variable_get('email_domain_mxr_validate_report_path', '') . '" target="_blank">View of table</a>' :
+      $view_of_table_link = variable_get('email_domain_validate_mxr_fail_entity_creation', 0) ?
+        '<a href="/' . variable_get('email_domain_validate_mxr_report_path', '') . '" target="_blank">View of table</a>' :
         t('View of table');
 
       $output .= '<li><strong>';
@@ -129,46 +129,46 @@ function email_domain_mxr_validate_help($path, $arg) {
 /**
  * Implements hook_menu().
  *
- * Creates a 'Email Domain MXR Validate' section on the
+ * Creates a 'Email Domain Validate MXR' section on the
  * administration page for configuration and settings.
  */
-function email_domain_mxr_validate_menu() {
-  $items['admin/config/development/email-domain-mxr-validate'] = array(
-    'title' => 'Email Domain MXR Validate Settings',
-    'description' => 'Settings for email domain mxr validate module.',
+function email_domain_validate_mxr_menu() {
+  $items['admin/config/development/email-domain-validate-mxr'] = array(
+    'title' => 'Email Domain Validate MXR Settings',
+    'description' => 'Settings for email domain validate mxr module.',
     'page callback' => 'drupal_get_form',
-    'page arguments' => array('email_domain_mxr_validate_settings'),
-    'access arguments' => array('administer email domain mxr validate configuration'),
+    'page arguments' => array('email_domain_validate_mxr_settings'),
+    'access arguments' => array('administer email domain validate mxr configuration'),
   );
 
-  $items['admin/config/development/email-domain-mxr-validate/configure'] = array(
+  $items['admin/config/development/email-domain-validate-mxr/configure'] = array(
     'title' => 'Configure',
-    'description' => 'Settings for email domain mxr validate module.',
+    'description' => 'Settings for email domain validate mxr module.',
     'page callback' => 'drupal_get_form',
-    'page arguments' => array('email_domain_mxr_validate_settings'),
-    'access arguments' => array('administer email domain mxr validate configuration'),
+    'page arguments' => array('email_domain_validate_mxr_settings'),
+    'access arguments' => array('administer email domain validate mxr configuration'),
     'type' => MENU_DEFAULT_LOCAL_TASK,
     'weight' => 0,
   );
 
-  $items['admin/config/development/email-domain-mxr-validate/error-message'] = array(
+  $items['admin/config/development/email-domain-validate-mxr/error-message'] = array(
     'title' => 'Error Message',
     'description' => 'Configure translatable error message.',
     'page callback' => 'drupal_get_form',
     'page arguments' => array(
       'variable_module_form',
-      'email_domain_mxr_validate',
+      'email_domain_validate_mxr',
     ),
-    'access arguments' => array('administer email domain mxr validate configuration'),
+    'access arguments' => array('administer email domain validate mxr configuration'),
     'type' => MENU_LOCAL_TASK,
     'weight' => 1,
   );
 
-  $items['admin/config/development/email-domain-mxr-validate/cache-domains'] = array(
+  $items['admin/config/development/email-domain-validate-mxr/cache-domains'] = array(
     'title' => 'Cached domains',
     'description' => 'List of cached domains',
-    'page callback' => 'email_domain_mxr_validate_cached_table',
-    'access arguments' => array('administer email domain mxr validate configuration'),
+    'page callback' => 'email_domain_validate_mxr_cached_table',
+    'access arguments' => array('administer email domain validate mxr configuration'),
     'type' => MENU_LOCAL_TASK,
     'weight' => 2,
   );
@@ -179,15 +179,15 @@ function email_domain_mxr_validate_menu() {
 /**
  * Implements hook_entity_info().
  */
-function email_domain_mxr_validate_entity_info() {
+function email_domain_validate_mxr_entity_info() {
   $info = array(
-    'email_domain_mxr_validate_fail' => array(
-      'label' => t('Email Domain MXR Validate Fail'),
-      'plural label' => t('Email Domain MXR Validate Fails'),
-      'description' => t('An entity created when an email domain mxr validation fails.'),
+    'email_domain_validate_mxr_fail' => array(
+      'label' => t('Email Domain Validate MXR Fail'),
+      'plural label' => t('Email Domain Validate MXR Fails'),
+      'description' => t('An entity created when an email domain validate mxr fails.'),
       'entity class' => 'Entity',
       'controller class' => 'EntityAPIController',
-      'base table' => 'email_domain_mxr_validate_fail',
+      'base table' => 'email_domain_validate_mxr_fail',
       'fieldable' => TRUE,
       'entity keys' => array(
         'id' => 'id',
@@ -195,7 +195,7 @@ function email_domain_mxr_validate_entity_info() {
       // Make use the class' label() and uri() implementation by default.
       'label callback' => 'entity_class_label',
       'uri callback' => 'entity_class_uri',
-      'module' => 'email_domain_mxr_validate',
+      'module' => 'email_domain_validate_mxr',
     ),
   );
 
@@ -205,29 +205,29 @@ function email_domain_mxr_validate_entity_info() {
 /**
  * Implements hook_entity_property_info_alter().
  */
-function email_domain_mxr_validate_entity_property_info_alter(&$info) {
-  $info['email_domain_mxr_validate_fail']['properties']['timestamp']['type'] = 'date';
-  $info['email_domain_mxr_validate_fail']['properties']['uid']['type'] = 'user';
+function email_domain_validate_mxr_entity_property_info_alter(&$info) {
+  $info['email_domain_validate_mxr_fail']['properties']['timestamp']['type'] = 'date';
+  $info['email_domain_validate_mxr_fail']['properties']['uid']['type'] = 'user';
 }
 
 /**
  * Implements hook_permission().
  */
-function email_domain_mxr_validate_permission() {
+function email_domain_validate_mxr_permission() {
   $permissions = array(
-    'administer field allow email domain mxr validate' => array(
-      'title' => t('Administer The Email Domain MXR Validation'),
+    'administer field allow email domain validate mxr' => array(
+      'title' => t('Administer Email Domain Validate Functionality'),
       'description' => t('Administer the allowance of fields to validate against mail exchange records..'),
       'restrict access' => TRUE,
     ),
-    'access email domain mxr validation failure report' => array(
-      'title' => t('Access Email Domain MXR Validation Failure Report'),
-      'description' => t('Access to the view of the email_domain_mxr_validate_fail entities.'),
+    'access email domain validate mxr failure report' => array(
+      'title' => t('Access Email Domain Validate Failure Report'),
+      'description' => t('Access to the view of the email_domain_validate_mxr_fail entities.'),
       'restrict access' => TRUE,
     ),
-    'administer email domain mxr validate configuration' => array(
-      'title' => t('Administer The Email Domain MXR Configuration Page'),
-      'description' => t('Administer the configuration page of the email_domain_mxr_validate module.'),
+    'administer email domain validate mxr configuration' => array(
+      'title' => t('Administer The Email Domain Validate Configuration Page'),
+      'description' => t('Administer the configuration page of the email_domain_validate_mxr module.'),
       'restrict access' => TRUE,
     ),
   );
@@ -238,22 +238,22 @@ function email_domain_mxr_validate_permission() {
 /**
  * Implements hook_views_api().
  */
-function email_domain_mxr_validate_views_api() {
+function email_domain_validate_mxr_views_api() {
   return array(
     'api' => 3,
-    'path' => drupal_get_path('module', 'email_domain_mxr_validate') . '/includes/views',
+    'path' => drupal_get_path('module', 'email_domain_validate_mxr') . '/includes/views',
   );
 }
 
 /**
  * Implements hook_form_alter().
  */
-function email_domain_mxr_validate_form_alter(array &$form, array &$form_state, $form_id) {
+function email_domain_validate_mxr_form_alter(array &$form, array &$form_state, $form_id) {
   // Add option to use this validation for webform module email components.
   if (module_exists('webform') &&
     $form_id === 'webform_component_edit_form' &&
-    $form['type']['#value'] === EMAIL_DOMAIN_MXR_VALIDATE_EMAIL_DATA_TYPE) {
-    email_domain_mxr_validate_helper_add_validation_checkbox_to_form($form);
+    $form['type']['#value'] === EMAIL_DOMAIN_VALIDATE_MXR_EMAIL_DATA_TYPE) {
+    email_domain_validate_mxr_helper_add_validation_checkbox_to_form($form);
   }
 }
 
@@ -262,7 +262,7 @@ function email_domain_mxr_validate_form_alter(array &$form, array &$form_state, 
  *
  * Add field settings option for this module to email field type.
  */
-function email_domain_mxr_validate_form_field_ui_field_edit_form_alter(&$form, &$form_state, $form_id) {
+function email_domain_validate_mxr_form_field_ui_field_edit_form_alter(&$form, &$form_state, $form_id) {
   // Obtain the field name from form (should really be $form_state,
   // but the Date field doesn't comply).
   $field_name = $form_state['build_info']['args'][0]['field_name'];
@@ -272,38 +272,38 @@ function email_domain_mxr_validate_form_field_ui_field_edit_form_alter(&$form, &
   $field_type_info = field_info_field_types($field_info['type']);
 
   // Only allow this to be attached to email fields.
-  if ($field_info['type'] !== EMAIL_DOMAIN_MXR_VALIDATE_EMAIL_DATA_TYPE) {
+  if ($field_info['type'] !== EMAIL_DOMAIN_VALIDATE_MXR_EMAIL_DATA_TYPE) {
     return;
   }
 
   $fld_settings =& $field_info['settings'];
 
-  $form_state['field_mail_domain_mxr_validate'] = array(
+  $form_state['field_mail_domain_validate_mxr'] = array(
     'field_name'      => $field_name,
     'field_info'      => $field_info,
     'field_type_info' => $field_type_info,
-    'mxr_validate'         => isset($fld_settings['field_mail_domain_mxr_validate']) ? $fld_settings['field_mail_domain_mxr_validate']['mxr_validate'] : FALSE,
+    'validate_mxr'         => isset($fld_settings['field_mail_domain_validate_mxr']) ? $fld_settings['field_mail_domain_validate_mxr']['validate_mxr'] : FALSE,
   );
 
   $settings =& $form['field']['settings'];
 
-  $settings['field_mail_domain_mxr_validate'] = array(
+  $settings['field_mail_domain_validate_mxr'] = array(
     '#type'        => 'fieldset',
-    '#title'       => t('MXR Validate'),
-    '#description' => t('Allow MXR validation for this field.'),
+    '#title'       => t('Validate MXR'),
+    '#description' => t('Allow validate MXR for this field.'),
     '#tree'        => TRUE,
-    'mxr_validate'      => array(
+    'validate_mxr'      => array(
       '#type'          => 'checkbox',
       '#title'         => t('Validate this field against mail exchange records'),
-      '#default_value' => $form_state['field_mail_domain_mxr_validate']['mxr_validate'],
+      '#default_value' => $form_state['field_mail_domain_validate_mxr']['validate_mxr'],
     ),
   );
 
   // Hide option from non-privileged users; ensure the values carried through.
-  if (!user_access('administer field allow email domain mxr validate')) {
-    $field_mail_domain_mxr_validate =& $settings['field_mail_domain_mxr_validate'];
-    $field_mail_domain_mxr_validate['mxr_validate']['#type'] = 'value';
-    $field_mail_domain_mxr_validate['mxr_validate']['#value'] = $field_mail_domain_mxr_validate['mxr_validate']['#default_value'];
+  if (!user_access('administer field allow email domain validate mxr')) {
+    $field_mail_domain_validate_mxr =& $settings['field_mail_domain_validate_mxr'];
+    $field_mail_domain_validate_mxr['validate_mxr']['#type'] = 'value';
+    $field_mail_domain_validate_mxr['validate_mxr']['#value'] = $field_mail_domain_validate_mxr['validate_mxr']['#default_value'];
   }
 }
 
@@ -312,10 +312,10 @@ function email_domain_mxr_validate_form_field_ui_field_edit_form_alter(&$form, &
  *
  * Adds the element validate function from this module to the field.
  */
-function email_domain_mxr_validate_field_widget_form_alter(&$element, &$form_state, $context) {
-  if (isset($context['field']['settings']['field_mail_domain_mxr_validate']['mxr_validate']) &&
-    $context['field']['settings']['field_mail_domain_mxr_validate']['mxr_validate']) {
-    $element['#element_validate'][] = 'email_domain_mxr_validate_element_validate';
+function email_domain_validate_mxr_field_widget_form_alter(&$element, &$form_state, $context) {
+  if (isset($context['field']['settings']['field_mail_domain_validate_mxr']['validate_mxr']) &&
+    $context['field']['settings']['field_mail_domain_validate_mxr']['validate_mxr']) {
+    $element['#element_validate'][] = 'email_domain_validate_mxr_element_validate';
   }
 }
 
@@ -337,10 +337,10 @@ function email_domain_mxr_validate_field_widget_form_alter(&$element, &$form_sta
  * @return bool
  *   TRUE if the validation check succeeds else FALSE.
  */
-function email_domain_mxr_validate_element_validate(array &$element, array &$form_state, array &$form) {
+function email_domain_validate_mxr_element_validate(array &$element, array &$form_state, array &$form) {
   global $user;
-  $email = $element['#value'] ?? $element[EMAIL_DOMAIN_MXR_VALIDATE_EMAIL_DATA_TYPE]['#value'] ?? EMAIL_DOMAIN_MXR_VALIDATE_FAIL_CODE;
-  $email_domain = EMAIL_DOMAIN_MXR_VALIDATE_FAIL_CODE;
+  $email = $element['#value'] ?? $element[EMAIL_DOMAIN_VALIDATE_MXR_EMAIL_DATA_TYPE]['#value'] ?? EMAIL_DOMAIN_VALIDATE_MXR_FAIL_CODE;
+  $email_domain = EMAIL_DOMAIN_VALIDATE_MXR_FAIL_CODE;
 
   // Only pass validation if email domain exists after '@'.
   if (strpos($email, '@') &&
@@ -354,24 +354,24 @@ function email_domain_mxr_validate_element_validate(array &$element, array &$for
   }
 
   // If domain is approved escape before records check; saves overhead.
-  if (in_array($email_domain, email_domain_mxr_validate_get_cached_allowed_domains()) ||
-    in_array($email_domain, variable_get('email_domain_mxr_validate_allowed_domains', array()))) {
+  if (in_array($email_domain, email_domain_validate_mxr_get_cached_allowed_domains()) ||
+    in_array($email_domain, variable_get('email_domain_validate_mxr_allowed_domains', array()))) {
     return TRUE;
   }
 
   // Check domain against mail exchange records.
   $mxhosts = array();
-  if ($email_domain !== EMAIL_DOMAIN_MXR_VALIDATE_FAIL_CODE) {
+  if ($email_domain !== EMAIL_DOMAIN_VALIDATE_MXR_FAIL_CODE) {
     // $mxhosts is mutated if mail exchange records exist.
     getmxrr($email_domain, $mxhosts);
   }
 
   // This is the check for the validation failure.
   if (empty($mxhosts)) {
-    form_error($element, email_domain_mxr_validate_get_error_message());
+    form_error($element, email_domain_validate_mxr_get_error_message());
 
-    if (variable_get('email_domain_mxr_validate_fail_entity_creation', FALSE)) {
-      $entity = entity_create('email_domain_mxr_validate_fail',
+    if (variable_get('email_domain_validate_mxr_fail_entity_creation', FALSE)) {
+      $entity = entity_create('email_domain_validate_mxr_fail',
         array(
           'email_address' => $email,
           'timestamp' => time(),
@@ -385,7 +385,7 @@ function email_domain_mxr_validate_element_validate(array &$element, array &$for
   }
 
   // If domain is validated against records, add it to cache.
-  email_domain_mxr_validate_add_domain_to_allowed_cache($email_domain);
+  email_domain_validate_mxr_add_domain_to_allowed_cache($email_domain);
   return TRUE;
 }
 
@@ -397,8 +397,8 @@ function email_domain_mxr_validate_element_validate(array &$element, array &$for
  *
  * @throws \Exception
  */
-function email_domain_mxr_validate_cached_table() {
-  $cached_domains = email_domain_mxr_validate_get_cached_allowed_domains();
+function email_domain_validate_mxr_cached_table() {
+  $cached_domains = email_domain_validate_mxr_get_cached_allowed_domains();
   $rows = array();
 
   $table_title = t('!label_openCached Domains!label_close',
@@ -438,37 +438,37 @@ function email_domain_mxr_validate_cached_table() {
 /**
  * Configure settings for the module.
  *
- * Enabling email_domain_mxr_validate_fail_entity_creation will cause
- * an email_domain_mxr_validate_fail entity to be created with each
- * failed email domain mxr validation.
+ * Enabling email_domain_validate_mxr_fail_entity_creation will cause
+ * an email_domain_validate_mxr_fail entity to be created with each
+ * failed email domain validate mxr.
  * The first time that error reporting is set, the
- * email_domain_mxr_validate_failures_view will become available.
+ * email_domain_validate_mxr_failures_view will become available.
  *
  * Domains that pass validation are cached
  * A variable stores allowed domains that will persist through
- * caches being flushed: 'email_domain_mxr_validate_allowed_domains'.
+ * caches being flushed: 'email_domain_validate_mxr_allowed_domains'.
  */
-function email_domain_mxr_validate_settings() {
+function email_domain_validate_mxr_settings() {
   $form['entity_creation_set'] = array(
     '#type' => 'fieldset',
     '#title' => t('Error Reporting'),
   );
 
-  $form['entity_creation_set']['email_domain_mxr_validate_fail_entity_creation'] = array(
+  $form['entity_creation_set']['email_domain_validate_mxr_fail_entity_creation'] = array(
     '#type' => 'checkbox',
     '#title' => t('Enable error reporting for failed validation checks'),
-    '#default_value' => variable_get('email_domain_mxr_validate_fail_entity_creation', FALSE),
+    '#default_value' => variable_get('email_domain_validate_mxr_fail_entity_creation', FALSE),
     '#description' => t('Enabling this for the first time will create a new view.'),
   );
 
-  $form['entity_creation_set']['email_domain_mxr_validate_report_path'] = array(
+  $form['entity_creation_set']['email_domain_validate_mxr_report_path'] = array(
     '#type' => 'textfield',
     '#title' => t('View Path'),
     '#description' => t('Set the path for the failed validation report view'),
-    '#default_value' => variable_get('email_domain_mxr_validate_report_path', ''),
+    '#default_value' => variable_get('email_domain_validate_mxr_report_path', ''),
     '#states' => array(
       'visible' => array(
-        ':input[name="email_domain_mxr_validate_fail_entity_creation"]' => array('checked' => TRUE),
+        ':input[name="email_domain_validate_mxr_fail_entity_creation"]' => array('checked' => TRUE),
       ),
     ),
   );
@@ -482,7 +482,7 @@ function email_domain_mxr_validate_settings() {
     'clear_cache' => array(
       '#type' => 'submit',
       '#value' => t('Clear domains cache'),
-      '#submit' => array('email_domain_mxr_validate_clear_cache_submit'),
+      '#submit' => array('email_domain_validate_mxr_clear_cache_submit'),
     ),
   );
 
@@ -493,7 +493,7 @@ function email_domain_mxr_validate_settings() {
     '#collapsed' => FALSE,
   );
 
-  $allowed_domains = variable_get('email_domain_mxr_validate_allowed_domains', array());
+  $allowed_domains = variable_get('email_domain_validate_mxr_allowed_domains', array());
 
   $allowed_domains_markup = '';
   foreach ($allowed_domains as $allowed_domain) {
@@ -501,7 +501,7 @@ function email_domain_mxr_validate_settings() {
   }
 
   $list_help = '- ' . t('Put each domain name on its own line.')
-    . "<br>- " . t('Removing domains from the list will have them checked by the mxr validate.');
+    . "<br>- " . t('Removing domains from the list will have them checked by the validate mxr.');
 
   $form['allowed_domains']['allowed_domains_list'] = array(
     '#type' => 'textarea',
@@ -514,69 +514,69 @@ function email_domain_mxr_validate_settings() {
   $form['actions']['submit'] = array(
     '#type' => 'submit',
     '#value' => t('Save Configuration'),
-    '#submit' => array('email_domain_mxr_validate_settings_submit'),
+    '#submit' => array('email_domain_validate_mxr_settings_submit'),
   );
 
   return $form;
 }
 
 /**
- * Email domain mxr validate settings form validation handler.
+ * Email domain validate mxr settings form validation handler.
  *
  * @param array $form
  *   Passed by value.
  * @param array $form_state
  *   Passed by reference.
  */
-function email_domain_mxr_validate_settings_validate(array $form, array &$form_state) {
-  if (!drupal_valid_path($form_state['values']['email_domain_mxr_validate_report_path'])) {
-    form_set_error('email_domain_mxr_validate_report_path', t('That is not a valid path.'));
+function email_domain_validate_mxr_settings_validate(array $form, array &$form_state) {
+  if (!drupal_valid_path($form_state['values']['email_domain_validate_mxr_report_path'])) {
+    form_set_error('email_domain_validate_mxr_report_path', t('That is not a valid path.'));
   }
 }
 
 /**
- * Email domain mxr validate settings form submit handler.
+ * Email domain validate mxr settings form submit handler.
  *
  * @param array $form
  *   Passed by value.
  * @param array $form_state
  *   Passed by reference.
  */
-function email_domain_mxr_validate_settings_submit(array $form, array &$form_state) {
+function email_domain_validate_mxr_settings_submit(array $form, array &$form_state) {
   // Error reporting handler.
-  $old_view_path = variable_get('email_domain_mxr_validate_report_path', '');
-  $new_view_path = $form_state['values']['email_domain_mxr_validate_report_path'];
-  $old_entity_create_checkbox = variable_get('email_domain_mxr_validate_fail_entity_creation', '');
-  $new_entity_create_checkbox = $form_state['values']['email_domain_mxr_validate_fail_entity_creation'];
+  $old_view_path = variable_get('email_domain_validate_mxr_report_path', '');
+  $new_view_path = $form_state['values']['email_domain_validate_mxr_report_path'];
+  $old_entity_create_checkbox = variable_get('email_domain_validate_mxr_fail_entity_creation', '');
+  $new_entity_create_checkbox = $form_state['values']['email_domain_validate_mxr_fail_entity_creation'];
 
   if (($old_view_path !== $new_view_path) ||
     ($old_entity_create_checkbox !== $new_entity_create_checkbox)) {
-    variable_set('email_domain_mxr_validate_report_path', $form_state['values']['email_domain_mxr_validate_report_path']);
-    variable_set('email_domain_mxr_validate_fail_entity_creation', $new_entity_create_checkbox);
+    variable_set('email_domain_validate_mxr_report_path', $form_state['values']['email_domain_validate_mxr_report_path']);
+    variable_set('email_domain_validate_mxr_fail_entity_creation', $new_entity_create_checkbox);
 
     // Rebuild view.
-    include_once email_domain_mxr_validate_views_api()['path'] . '/email_domain_mxr_validate.views.inc';
-    $view = email_domain_mxr_validate_views_default_views();
+    include_once email_domain_validate_mxr_views_api()['path'] . '/email_domain_validate_mxr.views.inc';
+    $view = email_domain_validate_mxr_views_default_views();
     if ($view = reset($view)) {
       views_save_view($view);
     }
   }
 
   // Allowed domains list handler.
-  $allowed_domains = variable_get('email_domain_mxr_validate_allowed_domains', array());
+  $allowed_domains = variable_get('email_domain_validate_mxr_allowed_domains', array());
   $domains_list = $form_state['values']['allowed_domains_list'];
   $domains_list = trim($domains_list, "\r\n");
   $submitted_domains = explode("\r\n", $domains_list);
 
   foreach ($submitted_domains as $domain_to_add) {
     if (!in_array($domain_to_add, $allowed_domains)) {
-      email_domain_mxr_validate_add_domain_to_persistent_list($domain_to_add);
+      email_domain_validate_mxr_add_domain_to_persistent_list($domain_to_add);
     }
   }
 
   foreach ($allowed_domains as $domain_to_remove) {
     if (!in_array($domain_to_remove, $submitted_domains)) {
-      email_domain_mxr_validate_remove_domain_from_persistent_list($domain_to_remove);
+      email_domain_validate_mxr_remove_domain_from_persistent_list($domain_to_remove);
     }
   }
 }
@@ -589,8 +589,8 @@ function email_domain_mxr_validate_settings_submit(array $form, array &$form_sta
  * @param array $form_state
  *   Form state array.
  */
-function email_domain_mxr_validate_clear_cache_submit(array $form, array $form_state) {
-  cache_clear_all('email_domain_mxr_validate_cached_domains', 'cache_email_domain_mxr_validate');
+function email_domain_validate_mxr_clear_cache_submit(array $form, array $form_state) {
+  cache_clear_all('email_domain_validate_mxr_cached_domains', 'cache_email_domain_validate_mxr');
   drupal_set_message(t('Domains cache has been cleared.'));
 }
 
@@ -600,8 +600,8 @@ function email_domain_mxr_validate_clear_cache_submit(array $form, array $form_s
  * @return array
  *   Empty array if cached array does not exist.
  */
-function email_domain_mxr_validate_get_cached_allowed_domains() {
-  return ($cache = cache_get('email_domain_mxr_validate_cached_domains', 'cache_email_domain_mxr_validate')) ? $cache->data : array();
+function email_domain_validate_mxr_get_cached_allowed_domains() {
+  return ($cache = cache_get('email_domain_validate_mxr_cached_domains', 'cache_email_domain_validate_mxr')) ? $cache->data : array();
 }
 
 /**
@@ -613,12 +613,12 @@ function email_domain_mxr_validate_get_cached_allowed_domains() {
  * @return bool
  *   TRUE if successfully added else FALSE.
  */
-function email_domain_mxr_validate_add_domain_to_allowed_cache(string $domain) {
-  $domains_list = ($cache = cache_get('email_domain_mxr_validate_cached_domains', 'cache_email_domain_mxr_validate')) ? $cache->data : array();
+function email_domain_validate_mxr_add_domain_to_allowed_cache(string $domain) {
+  $domains_list = ($cache = cache_get('email_domain_validate_mxr_cached_domains', 'cache_email_domain_validate_mxr')) ? $cache->data : array();
 
   if (!in_array($domain, $domains_list)) {
     $domains_list[] = $domain;
-    cache_set('email_domain_mxr_validate_cached_domains', $domains_list, 'cache_email_domain_mxr_validate');
+    cache_set('email_domain_validate_mxr_cached_domains', $domains_list, 'cache_email_domain_validate_mxr');
     return TRUE;
   }
 
@@ -634,13 +634,13 @@ function email_domain_mxr_validate_add_domain_to_allowed_cache(string $domain) {
  * @return bool
  *   TRUE if successfully removed else FALSE.
  */
-function email_domain_mxr_validate_remove_domain_from_allowed_cache(string $domain) {
-  $allowed_domains_list = ($cache = cache_get('email_domain_mxr_validate_cached_domains', 'cache_email_domain_mxr_validate')) ? $cache->data : array();
+function email_domain_validate_mxr_remove_domain_from_allowed_cache(string $domain) {
+  $allowed_domains_list = ($cache = cache_get('email_domain_validate_mxr_cached_domains', 'cache_email_domain_validate_mxr')) ? $cache->data : array();
   $key = array_search($domain, $allowed_domains_list);
 
   if ($allowed_domains_list[$key] === $domain) {
     unset($allowed_domains_list[$key]);
-    cache_set('email_domain_mxr_validate_cached_domains', $allowed_domains_list, 'cache_email_domain_mxr_validate');
+    cache_set('email_domain_validate_mxr_cached_domains', $allowed_domains_list, 'cache_email_domain_validate_mxr');
     return TRUE;
   }
 
@@ -653,8 +653,8 @@ function email_domain_mxr_validate_remove_domain_from_allowed_cache(string $doma
  * @param array $domains_list_to_add
  *   List of domains to add to the cached domains list.
  */
-function email_domain_mxr_validate_add_multiple_domains_to_cache(array $domains_list_to_add) {
-  $domains_list = ($cache = cache_get('email_domain_mxr_validate_cached_domains', 'cache_email_domain_mxr_validate')) ? $cache->data : array();
+function email_domain_validate_mxr_add_multiple_domains_to_cache(array $domains_list_to_add) {
+  $domains_list = ($cache = cache_get('email_domain_validate_mxr_cached_domains', 'cache_email_domain_validate_mxr')) ? $cache->data : array();
 
   foreach ($domains_list_to_add as $domain) {
     if (!in_array($domain, $domains_list)) {
@@ -662,7 +662,7 @@ function email_domain_mxr_validate_add_multiple_domains_to_cache(array $domains_
     }
   }
 
-  cache_set('email_domain_mxr_validate_cached_domains', $domains_list, 'cache_email_domain_mxr_validate');
+  cache_set('email_domain_validate_mxr_cached_domains', $domains_list, 'cache_email_domain_validate_mxr');
 }
 
 /**
@@ -674,12 +674,12 @@ function email_domain_mxr_validate_add_multiple_domains_to_cache(array $domains_
  * @return bool
  *   Returns TRUE if successfully removed, else FALSE.
  */
-function email_domain_mxr_validate_add_domain_to_persistent_list(string $domain_to_add) {
-  $persistent_list = variable_get('email_domain_mxr_validate_allowed_domains', array());
+function email_domain_validate_mxr_add_domain_to_persistent_list(string $domain_to_add) {
+  $persistent_list = variable_get('email_domain_validate_mxr_allowed_domains', array());
 
   if (!in_array($domain_to_add, $persistent_list)) {
     $persistent_list[] = $domain_to_add;
-    variable_set('email_domain_mxr_validate_allowed_domains', $persistent_list);
+    variable_set('email_domain_validate_mxr_allowed_domains', $persistent_list);
     return TRUE;
   }
 
@@ -695,13 +695,13 @@ function email_domain_mxr_validate_add_domain_to_persistent_list(string $domain_
  * @return bool
  *   Returns TRUE if successfully removed, else FALSE.
  */
-function email_domain_mxr_validate_remove_domain_from_persistent_list(string $domain_to_remove) {
-  $persistent_list = variable_get('email_domain_mxr_validate_allowed_domains', array());
+function email_domain_validate_mxr_remove_domain_from_persistent_list(string $domain_to_remove) {
+  $persistent_list = variable_get('email_domain_validate_mxr_allowed_domains', array());
   $key = array_search($domain_to_remove, $persistent_list);
 
   if ($persistent_list[$key] === $domain_to_remove) {
     unset($persistent_list[$key]);
-    variable_set('email_domain_mxr_validate_allowed_domains', $persistent_list);
+    variable_set('email_domain_validate_mxr_allowed_domains', $persistent_list);
     return TRUE;
   }
 
@@ -716,12 +716,12 @@ function email_domain_mxr_validate_remove_domain_from_persistent_list(string $do
  * @param array $form
  *   Passed by reference.
  */
-function email_domain_mxr_validate_helper_add_validation_checkbox_to_form(array &$form) {
+function email_domain_validate_mxr_helper_add_validation_checkbox_to_form(array &$form) {
   $form['validation']['domain_mxr'] = array(
     '#type' => 'checkbox',
     '#title' => t('Mail Exchange Record Check'),
     '#return_value' => 1,
-    '#description' => t('Check email domain against mail exchange records check using the Email Domain MXR Validate module.'),
+    '#description' => t('Check email domain against mail exchange records check using the Email Domain Validate MXR module.'),
     '#default_value' => $form['#node']->webform['components'][$form['cid']['#value']]['extra']['domain_mxr'] ?? 0,
     '#parents' =>
       array(
@@ -736,13 +736,13 @@ function email_domain_mxr_validate_helper_add_validation_checkbox_to_form(array 
  *
  * Add this modules element validate when webform component is rendered.
  */
-function email_domain_mxr_validate_webform_component_render_alter(array &$element, array &$component) {
-  if ($element['#type'] !== 'webform_' . EMAIL_DOMAIN_MXR_VALIDATE_EMAIL_DATA_TYPE) {
+function email_domain_validate_mxr_webform_component_render_alter(array &$element, array &$component) {
+  if ($element['#type'] !== 'webform_' . EMAIL_DOMAIN_VALIDATE_MXR_EMAIL_DATA_TYPE) {
     return;
   }
 
   if ($component['extra']['domain_mxr']) {
-    $element['#element_validate'][] = 'email_domain_mxr_validate_element_validate';
+    $element['#element_validate'][] = 'email_domain_validate_mxr_element_validate';
   }
 }
 
@@ -752,11 +752,11 @@ function email_domain_mxr_validate_webform_component_render_alter(array &$elemen
  * @return string
  *   Error string depending on if the i18n_variable module is enabled.
  */
-function email_domain_mxr_validate_get_error_message() {
+function email_domain_validate_mxr_get_error_message() {
   if (module_exists('i18n_variable')) {
     $langcode = $GLOBALS['i18n_language_variable']->language ?? 'en';
-    return i18n_variable_get('email_domain_mxr_validate_error_message', $langcode, EMAIL_DOMAIN_MXR_VALIDATE_DEFAULT_ERROR_MESSAGE);
+    return i18n_variable_get('email_domain_validate_mxr_error_message', $langcode, EMAIL_DOMAIN_VALIDATE_MXR_DEFAULT_ERROR_MESSAGE);
   }
 
-  return variable_get('email_domain_mxr_validate_error_message', EMAIL_DOMAIN_MXR_VALIDATE_DEFAULT_ERROR_MESSAGE);
+  return variable_get('email_domain_validate_mxr_error_message', EMAIL_DOMAIN_VALIDATE_MXR_DEFAULT_ERROR_MESSAGE);
 }
