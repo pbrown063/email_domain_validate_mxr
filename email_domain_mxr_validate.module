@@ -289,8 +289,8 @@ function email_domain_validate_mxr_form_field_ui_field_edit_form_alter(&$form, &
 
   $settings['field_mail_domain_validate_mxr'] = array(
     '#type'        => 'fieldset',
-    '#title'       => t('MXR Validate'),
-    '#description' => t('Allow MXR validation for this field.'),
+    '#title'       => t('Validate MXR'),
+    '#description' => t('Allow validate MXR for this field.'),
     '#tree'        => TRUE,
     'validate_mxr'      => array(
       '#type'          => 'checkbox',
@@ -501,7 +501,7 @@ function email_domain_validate_mxr_settings() {
   }
 
   $list_help = '- ' . t('Put each domain name on its own line.')
-    . "<br>- " . t('Removing domains from the list will have them checked by the mxr validate.');
+    . "<br>- " . t('Removing domains from the list will have them checked by the validate mxr.');
 
   $form['allowed_domains']['allowed_domains_list'] = array(
     '#type' => 'textarea',

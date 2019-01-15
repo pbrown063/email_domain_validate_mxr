@@ -15,7 +15,7 @@ and a corresponding report (view) is available.
 Once the module is enabled validation
 can be utilized through the Drupal interface in two ways:
  1. Managing fields of the 'email' type for content types (An
-    MXR validate section with a checkbox will be available)
+    validate MXR section with a checkbox will be available)
  2. Adding or editing an email type component to a webform
     (A Mail Exchange Record Check checkbox will be visible
     in the validation section)
