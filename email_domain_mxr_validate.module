@@ -278,32 +278,32 @@ function email_domain_validate_mxr_form_field_ui_field_edit_form_alter(&$form, &
 
   $fld_settings =& $field_info['settings'];
 
-  $form_state['field_mail_domain_mxr_validate'] = array(
+  $form_state['field_mail_domain_validate_mxr'] = array(
     'field_name'      => $field_name,
     'field_info'      => $field_info,
     'field_type_info' => $field_type_info,
-    'mxr_validate'         => isset($fld_settings['field_mail_domain_mxr_validate']) ? $fld_settings['field_mail_domain_mxr_validate']['mxr_validate'] : FALSE,
+    'validate_mxr'         => isset($fld_settings['field_mail_domain_validate_mxr']) ? $fld_settings['field_mail_domain_validate_mxr']['validate_mxr'] : FALSE,
   );
 
   $settings =& $form['field']['settings'];
 
-  $settings['field_mail_domain_mxr_validate'] = array(
+  $settings['field_mail_domain_validate_mxr'] = array(
     '#type'        => 'fieldset',
     '#title'       => t('MXR Validate'),
     '#description' => t('Allow MXR validation for this field.'),
     '#tree'        => TRUE,
-    'mxr_validate'      => array(
+    'validate_mxr'      => array(
       '#type'          => 'checkbox',
       '#title'         => t('Validate this field against mail exchange records'),
-      '#default_value' => $form_state['field_mail_domain_mxr_validate']['mxr_validate'],
+      '#default_value' => $form_state['field_mail_domain_validate_mxr']['validate_mxr'],
     ),
   );
 
   // Hide option from non-privileged users; ensure the values carried through.
   if (!user_access('administer field allow email domain validate mxr')) {
-    $field_mail_domain_mxr_validate =& $settings['field_mail_domain_mxr_validate'];
-    $field_mail_domain_mxr_validate['mxr_validate']['#type'] = 'value';
-    $field_mail_domain_mxr_validate['mxr_validate']['#value'] = $field_mail_domain_mxr_validate['mxr_validate']['#default_value'];
+    $field_mail_domain_validate_mxr =& $settings['field_mail_domain_validate_mxr'];
+    $field_mail_domain_validate_mxr['validate_mxr']['#type'] = 'value';
+    $field_mail_domain_validate_mxr['validate_mxr']['#value'] = $field_mail_domain_validate_mxr['validate_mxr']['#default_value'];
   }
 }
 
@@ -313,8 +313,8 @@ function email_domain_validate_mxr_form_field_ui_field_edit_form_alter(&$form, &
  * Adds the element validate function from this module to the field.
  */
 function email_domain_validate_mxr_field_widget_form_alter(&$element, &$form_state, $context) {
-  if (isset($context['field']['settings']['field_mail_domain_mxr_validate']['mxr_validate']) &&
-    $context['field']['settings']['field_mail_domain_mxr_validate']['mxr_validate']) {
+  if (isset($context['field']['settings']['field_mail_domain_validate_mxr']['validate_mxr']) &&
+    $context['field']['settings']['field_mail_domain_validate_mxr']['validate_mxr']) {
     $element['#element_validate'][] = 'email_domain_validate_mxr_element_validate';
   }
 }
